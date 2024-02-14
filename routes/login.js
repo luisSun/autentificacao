@@ -2,11 +2,11 @@ const express = require('express');
 const router = express.Router();
 const db = require('../src/db');
 
-router.get('/', (req, res) => {
+router.get('/login', (req, res) => {
   res.render('login');
 });
 
-router.post('/', (req, res) => {
+router.post('/login', (req, res) => {
   const { email, senha } = req.body;
   if (email && senha) {
     db.query('SELECT * FROM users.usersdb WHERE username = ? AND password_hash = ?', [email, senha], (err, result) => {
@@ -18,7 +18,7 @@ router.post('/', (req, res) => {
           req.session.loggedin = true;
           req.session.email = email;
           req.session.tipo_acesso = user.tipo_acesso;
-          res.redirect('/');
+          res.redirect('/dashboard');
         } else {
           res.send('Email ou senha incorretos');
         }

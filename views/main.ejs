@@ -7,8 +7,9 @@
   <h1>Bem-vindo<%= email ? ', ' + email : '' %>!</h1>
   <% if (email) { %>
     <ul>
-        <li><a href="/dashboard">DashBoard</a></li>
-        <li><a href="/logout">Logout</a></li>
+      <li><a href="/dashboard">DashBoard</a></li>
+      <li><a href="/admin">Admin</a></li>
+      <li><a href="/logout">Logout</a></li>
     </ul>
   <% } else { %>
     <a href="/login">Login</a>
