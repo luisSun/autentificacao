@@ -28,14 +28,15 @@ app.use(session({
 }));
 
 app.use(express.urlencoded({ extended: false }));
+app.use(express.static('public'));
 
 app.use('/', loginRouter);
 app.use('/', requireAuth, dashboardRouter);
 app.use('/', requireAuth, adminRouter);
 
 app.get('/logout', (req, res) => {
+  res.send('<script>alert("Até Mais"); window.location.href = "/login";</script>')
   req.session.destroy();
-  res.redirect('/login');
 });
 
 app.listen(PORT, () => {

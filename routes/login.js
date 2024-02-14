@@ -20,7 +20,7 @@ router.post('/login', (req, res) => {
           req.session.tipo_acesso = user.tipo_acesso;
           res.redirect('/dashboard');
         } else {
-          res.send('Email ou senha incorretos');
+          return res.send('<script>alert("Email ou senha incorretos"); window.location.href = "/login";</script>')
         }
       }
     });
