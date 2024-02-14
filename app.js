@@ -1,14 +1,25 @@
 const express = require('express');
 const session = require('express-session');
+
 const loginRouter = require('./routes/login.js');
-const dashboardRouter = require('./routes/dashboard');
-const adminRouter = require('./routes/admin');
+const dashboardRouter = require('./routes/dashboard.js');
+const adminRouter = require('./routes/admin.js');
 
 const app = express();
-const PORT = process.env.PORT || 8080;
+const PORT = process.env.PORT || 8081;
 
 app.set('view engine', 'ejs');
 app.set('views', __dirname + '/views');
+
+function requireAuth(req, res, next) {
+  if (req.session && req.session.loggedin) {
+    // Se o usuário estiver autenticado, permita o acesso à próxima rota
+    return next();
+  } else {
+    // Se o usuário não estiver autenticado, redirecione para a página de login
+    res.redirect('/login');
+  }
+}
 
 app.use(session({
   secret: 'secreto',
@@ -18,17 +29,13 @@ app.use(session({
 
 app.use(express.urlencoded({ extended: false }));
 
-app.use('/login', loginRouter);
-app.use('/dashboard', dashboardRouter);
-app.use('/admin', adminRouter);
-
-app.get('/', (req, res) => {
-  res.render('main', { email: req.session.email });
-});
+app.use('/', loginRouter);
+app.use('/', requireAuth, dashboardRouter);
+app.use('/', requireAuth, adminRouter);
 
 app.get('/logout', (req, res) => {
   req.session.destroy();
-  res.redirect('/');
+  res.redirect('/login');
 });
 
 app.listen(PORT, () => {
