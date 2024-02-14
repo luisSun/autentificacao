@@ -1,0 +1,38 @@
+const express = require('express');
+const router = express.Router();
+const bcrypt = require('bcryptjs'); // Importe o bcryptjs aqui
+const db = require('../src/db');
+
+router.get('/login', (req, res) => {
+  res.render('login');
+});
+
+router.post('/login', (req, res) => {
+  const { email, senha } = req.body;
+  if (email && senha) {
+    db.query('SELECT * FROM users.usersdb WHERE username = ?', [email], async (err, result) => {
+      if (err) {
+        res.send('Ocorreu um erro ao fazer o login');
+      } else {
+        if (result.length > 0) {
+          const user = result[0];
+          const match = await bcrypt.compare(senha, user.password_hash);
+          if (match) {
+            req.session.loggedin = true;
+            req.session.email = email;
+            req.session.tipo_acesso = user.tipo_acesso;
+            res.redirect('/dashboard');
+          } else {
+            return res.send('<script>alert("Email ou senha incorretos"); window.location.href = "/login";</script>');
+          }
+        } else {
+          return res.send('<script>alert("Email ou senha incorretos"); window.location.href = "/login";</script>');
+        }
+      }
+    });
+  } else {
+    res.send('Por favor, informe o email e a senha');
+  }
+});
+
+module.exports = router;
