@@ -1,16 +1,12 @@
-<!DOCTYPE html>
-<html>
-<head>
-  <title>Login</title>
-</head>
-<body>
-  <h1>Login</h1>
-  <form action="/login" method="POST">
-    <label for="email">Email:</label>
-    <input type="text" id="email" name="email"><br><br>
-    <label for="senha">Senha:</label>
-    <input type="password" id="senha" name="senha"><br><br>
-    <input type="submit" value="Login">
-  </form>
+<%- include('partial/head.ejs') %>
+<body class="bodylogin">
+    <div class="login">
+    <h2>Login</h2>
+    <form action="/login" method="post">
+        <input type="text" name="email" placeholder="Email" required>
+        <input type="password" name="senha" placeholder="Senha" required>
+        <button type="submit">Entrar</button>
+    </form>
+</div>
 </body>
 </html>

@@ -1,0 +1,40 @@
+.bodylogin {
+    background-color: #222222;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+}
+.login {
+    max-width: 400px;
+    padding: 30px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    background-color: #282828;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    color: aliceblue;
+}
+.login h2 {
+    text-align: center;
+    margin-bottom: 20px;
+}
+.login input[type="text"],
+.login input[type="password"],
+.login button[type="submit"] {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 10px;
+    border: 1px solid #ffa600;
+    border-radius: 3px;
+    box-sizing: border-box; /* Adicione esta linha para ajustar o tamanho corretamente */
+}
+.login button[type="submit"] {
+    background: linear-gradient(to right, orange, #df7000);
+    color: #fff;
+    border: none;
+    cursor: pointer;
+}
+.login button[type="submit"]:hover {
+    background-color: #0056b3;
+}
